@@ -1,0 +1,69 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jun  9 11:27:54 2022
+
+@author: sabri
+"""
+
+import cv2
+import imutils
+import matplotlib.pyplot as plt
+import os
+
+#use OpenCV to read image
+file_path= r"C:\Users\sabri\Documents\PYTHON\DL\Lenna_(test_image).png"
+lenna = cv2.imread(file_path)
+#%%
+#display 
+cv2.imshow("Lenna image", lenna)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+#%%
+#read image as grayscale image
+lenna_greyscale= cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+#display 
+cv2.imshow("Lenna grey scale image", lenna_greyscale)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+#%%
+#convert color inro graysclae
+color_code= cv2.COLOR_BGR2HSV
+converted_lenna= cv2.cvtColor(lenna, color_code)
+#display 
+cv2.imshow("Lenna converted image", converted_lenna)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+#%%
+
+#RESIZE image
+#1. resize image into smaller one
+lenna_small= cv2.resize(lenna, (256, 256))
+#2. resize image into bigger apply all 3 types of interpolation methods.
+lenna_big1= cv2.resize(lenna_small, (1024, 1024), interpolation= cv2.INTER_NEAREST)
+lenna_big2= cv2.resize(lenna_small, (1024, 1024), interpolation= cv2.INTER_LINEAR)
+lenna_big3= cv2.resize(lenna_small, (1024, 1024), interpolation= cv2.INTER_CUBIC)
+
+#3. Display resize images
+cv2.imshow("Downsized image", lenna_small)
+cv2.waitKey(0)
+
+cv2.imshow("Upsized image use Nearest Neighbour", lenna_big1)
+cv2.waitKey(0)
+
+
+cv2.imshow("Upsized image use Linear", lenna_big2)
+cv2.waitKey(0)
+
+
+cv2.imshow("Downsized image use Cubic", lenna_big3)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+#%%
+
+#save image
+root_path= r"C:\Users\sabri\Documents\PYTHON\DL"
+save_path= os.path.join(root_path, "savedlenna.png")
+cv2.imwrite(save_path, lenna_big3)
